@@ -2,6 +2,7 @@
     import ollama from 'ollama'
     import Layout from "$lib/components/Layout.svelte";
     import Ask from "$lib/components/Ask.svelte";
+    import anonymizationQuery from './anonymization.txt?raw';
 
     let chat = [];
     let query = "";
@@ -12,8 +13,8 @@
         chat = [...chat, { type: "ASK", text: query }];
 
         const response = await ollama.chat({
-            model: 'llama3.2',
-            messages: [{role: 'user', content: query}],
+            model: 'qwen2:7b',
+            messages: [{role: 'user', content: anonymizationQuery+query}],
         });
 
         query = "";
