@@ -1,5 +1,13 @@
 <script>
+    import { onMount } from 'svelte';
+    import { marked } from 'marked';
     export let text;
+
+    let htmlContent = '';
+
+    onMount(async () => {
+        htmlContent = await marked(text);
+    })
 </script>
 
 <li class="relative flex gap-x-4">
@@ -13,7 +21,7 @@
         <span class="font-medium text-gray-900"><slot></slot></span>
 
         <div class="w-full pt-2">
-            {text}
+            {@html htmlContent}
         </div>
     </div>
 </li>
