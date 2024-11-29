@@ -1,6 +1,7 @@
 <script>
     import ollama from 'ollama'
     import Layout from "$lib/components/Layout.svelte";
+    import Ask from "$lib/components/Ask.svelte";
 
     let chat = [];
     let query = "";
@@ -8,20 +9,32 @@
     async function ask() {
         console.log(query);
 
+        chat = [...chat, { type: "ASK", text: query }];
+
         const response = await ollama.chat({
             model: 'llama3.2',
             messages: [{role: 'user', content: query}],
-        })
+        });
 
-        console.log(response.message.content)
+        query = "";
+        chat = [...chat, { type: "ANSWER", text: response.message.content }];
     }
 
 
 </script>
 <Layout>
     <div class="w-full max-w-2xl mx-auto">
-        <h1>Welcome to SvelteKit</h1>
-        <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+        <div class="flow-root">
+            <ul role="list" class="-mb-8">
+                {#each chat as chatRow}
+                    {#if chatRow.type==='ASK'}
+                        <Ask text={chatRow.text} >User</Ask>
+                    {:else }
+                        <Ask text={chatRow.text} >Mountbirch AI</Ask>
+                    {/if}
+                {/each}
+            </ul>
+        </div>
     </div>
 
     <!-- Query -->
