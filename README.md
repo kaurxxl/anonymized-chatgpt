@@ -2,17 +2,13 @@
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## Creating a project
+## Prerequisites
 
-If you're seeing this, you've probably already done this step. Congrats!
+Install ollama. 
+https://ollama.com/download
 
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
+Install local llama3 using ollama.
+https://ollama.com/library/llama3.2
 
 ## Developing
 
