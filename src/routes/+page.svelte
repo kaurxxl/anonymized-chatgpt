@@ -17,8 +17,29 @@
             messages: [{role: 'user', content: anonymizationQuery+query}],
         });
 
+    let chatGptQuery = response.message.content;
+
+        try {
+            const res = await fetch('/api/chatgpt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: chatGptQuery }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                chat = [...chat, { type: "ANSWER", text: data.response }];
+            } else {
+
+            }
+        } catch (err) {
+
+        }
+
         query = "";
-        chat = [...chat, { type: "ANSWER", text: response.message.content }];
     }
 
 
