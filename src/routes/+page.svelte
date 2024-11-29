@@ -1,11 +1,19 @@
 <script>
+    import ollama from 'ollama'
     import Layout from "$lib/components/Layout.svelte";
 
     let chat = [];
     let query = "";
 
-    function ask() {
+    async function ask() {
         console.log(query);
+
+        const response = await ollama.chat({
+            model: 'llama3.2',
+            messages: [{role: 'user', content: query}],
+        })
+
+        console.log(response.message.content)
     }
 
 
